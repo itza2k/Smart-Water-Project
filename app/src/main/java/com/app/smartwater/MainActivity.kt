@@ -10,8 +10,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.app.smartwater.screens.DashboardScreen
 import com.app.smartwater.screens.LoginScreen
 import com.app.smartwater.screens.RegisterScreen
-import com.app.smartwater.screens.*
 import com.app.smartwater.ui.theme.SmartWaterTheme
+import com.app.smartwater.viewmodel.AuthViewModel
+import androidx.activity.viewModels
+import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SmartWaterTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.Login) }
+                val authViewModel: AuthViewModel = viewModel()
 
                 when (currentScreen) {
                     is Screen.Login -> LoginScreen(
@@ -29,7 +33,10 @@ class MainActivity : ComponentActivity() {
                         onRegisterSuccess = { currentScreen = Screen.Login },
                         onBackToLogin = { currentScreen = Screen.Login }
                     )
-                    is Screen.Dashboard -> DashboardScreen()
+                    is Screen.Dashboard -> {
+                        val token = authViewModel.authToken ?: ""
+                        DashboardScreen(token)
+                    }
                 }
             }
         }

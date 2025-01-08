@@ -6,8 +6,10 @@ import com.app.smartwater.network.NetworkModule
 import kotlinx.coroutines.launch
 import com.app.smartwater.network.User
 
-
 class AuthViewModel : ViewModel() {
+    var authToken: String? = null
+        private set
+
     fun registerUser(name: String, email: String, password: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             try {
@@ -22,7 +24,8 @@ class AuthViewModel : ViewModel() {
     fun loginUser(email: String, password: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             try {
-                NetworkModule.apiService.loginUser(email, password)
+                val response = NetworkModule.apiService.loginUser(email, password)
+                authToken = "Bearer ${response.token}"
                 onSuccess()
             } catch (e: Exception) {
                 onError(e.message ?: "Unknown error")
@@ -33,7 +36,8 @@ class AuthViewModel : ViewModel() {
     fun getAllUsers(onSuccess: (List<User>) -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             try {
-                val users = NetworkModule.apiService.getAllUsers()
+                val token = authToken ?: throw IllegalStateException("Auth token is null")
+                val users = NetworkModule.apiService.getAllUsers(token)
                 onSuccess(users)
             } catch (e: Exception) {
                 onError(e.message ?: "Unknown error")

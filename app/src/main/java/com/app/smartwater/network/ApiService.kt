@@ -17,32 +17,55 @@ interface ApiService {
     ): LoginResponse
 
     @GET("api/auth/users")
-    suspend fun getAllUsers(): List<User>
+    suspend fun getAllUsers(
+        @Header("Authorization") authHeader: String
+    ): List<User>
 
     @POST("api/waterlevel")
-    suspend fun addWaterLevel(@Query("level") level: Double)
+    suspend fun addWaterLevel(
+        @Query("level") level: Double,
+        @Header("Authorization") authHeader: String
+    )
 
     @GET("api/waterlevel/current")
-    suspend fun getCurrentWaterLevel(): WaterLevelResponse
+    suspend fun getCurrentWaterLevel(
+        @Header("Authorization") authHeader: String
+    ): WaterLevelResponse
 
     @GET("api/temperature/current")
-    suspend fun getCurrentTemperature(): TemperatureResponse
+    suspend fun getCurrentTemperature(
+        @Header("Authorization") authHeader: String
+    ): TemperatureResponse
 
     @GET("api/humidity/current")
-    suspend fun getCurrentHumidity(): HumidityResponse
+    suspend fun getCurrentHumidity(
+        @Header("Authorization") authHeader: String
+    ): HumidityResponse
 
     @GET("api/humidity/leakage")
-    suspend fun checkLeakage(): LeakageResponse
+    suspend fun checkLeakage(
+        @Header("Authorization") authHeader: String
+    ): LeakageResponse
 
     @POST("api/sensor/data")
-    suspend fun addSensorData(@Body sensorData: SensorData)
+    suspend fun addSensorData(
+        @Body sensorData: SensorData,
+        @Header("Authorization") authHeader: String
+    )
 
     @GET("api/sensor/current")
-    suspend fun getCurrentSensorData(): SensorDataResponse
+    suspend fun getCurrentSensorData(
+        @Header("Authorization") authHeader: String
+    ): SensorDataResponse
 
     @POST("api/alerts")
-    suspend fun createAlert(@Body alert: Alert)
+    suspend fun createAlert(
+        @Body alert: Alert,
+        @Header("Authorization") authHeader: String
+    )
 
     @GET("api/alerts/active")
-    suspend fun getActiveAlerts(): List<Alert>
+    suspend fun getActiveAlerts(
+        @Header("Authorization") authHeader: String
+    ): List<Alert>
 }

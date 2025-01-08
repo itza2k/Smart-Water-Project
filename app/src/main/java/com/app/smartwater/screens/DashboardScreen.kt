@@ -5,16 +5,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import com.app.smartwater.viewmodel.DashboardViewModel
-import com.app.smartwater.screens.TemperatureSection
-import com.app.smartwater.screens.HumiditySection
-import com.app.smartwater.network.Alert
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.app.smartwater.viewmodel.DashboardViewModel
+import com.app.smartwater.viewmodel.DashboardViewModelFactory
+import com.app.smartwater.network.Alert
 
 @Composable
-fun DashboardScreen() {
-    val viewModel: DashboardViewModel = viewModel()
+fun DashboardScreen(authToken: String) {
+    val viewModel: DashboardViewModel = viewModel(factory = DashboardViewModelFactory(authToken))
     var waterLevel by remember { mutableStateOf<Double?>(null) }
     var temperature by remember { mutableStateOf<Double?>(null) }
     var humidity by remember { mutableStateOf<Double?>(null) }
