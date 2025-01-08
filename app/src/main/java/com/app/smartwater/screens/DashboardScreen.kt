@@ -5,11 +5,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModel
 import com.app.smartwater.viewmodel.DashboardViewModel
 import com.app.smartwater.screens.TemperatureSection
 import com.app.smartwater.screens.HumiditySection
-import com.app.smartwater.models.Alert
+import com.app.smartwater.network.Alert
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun DashboardScreen() {
@@ -18,7 +19,6 @@ fun DashboardScreen() {
     var temperature by remember { mutableStateOf<Double?>(null) }
     var humidity by remember { mutableStateOf<Double?>(null) }
     var isLeakageDetected by remember { mutableStateOf<Boolean?>(null) }
-    var sensorData by remember { mutableStateOf<SensorDataResponse?>(null) }
     var alerts by remember { mutableStateOf<List<Alert>?>(null) }
 
     LaunchedEffect(Unit) {
@@ -26,7 +26,6 @@ fun DashboardScreen() {
         viewModel.getCurrentTemperature({ temperature = it }, { /* handle error */ })
         viewModel.getCurrentHumidity({ humidity = it }, { /* handle error */ })
         viewModel.checkLeakage({ isLeakageDetected = it }, { /* handle error */ })
-        viewModel.getCurrentSensorData({ sensorData = it }, { /* handle error */ })
         viewModel.getActiveAlerts({ alerts = it }, { /* handle error */ })
     }
 
@@ -40,8 +39,6 @@ fun DashboardScreen() {
         TemperatureSection(temperature)
         Spacer(modifier = Modifier.height(16.dp))
         HumiditySection(humidity, isLeakageDetected)
-        Spacer(modifier = Modifier.height(16.dp))
-        SensorDataSection(sensorData)
         Spacer(modifier = Modifier.height(16.dp))
         AlertsSection(alerts)
     }

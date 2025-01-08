@@ -2,6 +2,7 @@ package com.app.smartwater.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.smartwater.network.Alert
 import com.app.smartwater.network.NetworkModule
 import kotlinx.coroutines.launch
 
@@ -50,16 +51,7 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
-    fun getCurrentSensorData(onSuccess: (SensorDataResponse) -> Unit, onError: (String) -> Unit) {
-        viewModelScope.launch {
-            try {
-                val response = NetworkModule.apiService.getCurrentSensorData()
-                onSuccess(response)
-            } catch (e: Exception) {
-                onError(e.message ?: "Unknown error")
-            }
-        }
-    }
+
 
     fun getActiveAlerts(onSuccess: (List<Alert>) -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {

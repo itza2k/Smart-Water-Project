@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.app.smartwater.screens.DashboardScreen
 import com.app.smartwater.screens.LoginScreen
 import com.app.smartwater.screens.RegisterScreen
-import com.app.smartwater.ui.screens.*
+import com.app.smartwater.screens.*
 import com.app.smartwater.ui.theme.SmartWaterTheme
 
 class MainActivity : ComponentActivity() {

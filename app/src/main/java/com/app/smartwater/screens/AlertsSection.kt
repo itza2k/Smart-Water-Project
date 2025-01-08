@@ -5,7 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.app.smartwater.models.Alert
+import com.app.smartwater.network.Alert
 
 @Composable
 fun AlertsSection(alerts: List<Alert>?) {
