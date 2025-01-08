@@ -17,12 +17,11 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun loginUser(email: String, password: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun loginUser(email: String, password: String, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             try {
-                // Assuming loginUser endpoint exists and returns a token or user data
-                NetworkModule.apiService.loginUser(email, password)
-                onSuccess()
+                val response = NetworkModule.apiService.loginUser(email, password)
+                onSuccess(response.token) // Assuming the response contains a token
             } catch (e: Exception) {
                 onError(e.message ?: "Unknown error")
             }

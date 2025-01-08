@@ -10,6 +10,12 @@ interface ApiService {
         @Query("password") password: String
     )
 
+    @POST("api/auth/login")
+    suspend fun loginUser(
+        @Query("email") email: String,
+        @Query("password") password: String
+    ): LoginResponse
+
     @GET("api/auth/users")
     suspend fun getAllUsers(): List<User>
 
