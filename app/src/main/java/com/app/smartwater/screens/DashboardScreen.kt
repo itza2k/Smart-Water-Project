@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.smartwater.viewmodel.DashboardViewModel
 import com.app.smartwater.screens.TemperatureSection
 import com.app.smartwater.screens.HumiditySection
+import com.app.smartwater.models.Alert
 
 @Composable
 fun DashboardScreen() {
