@@ -3,45 +3,49 @@ package com.app.smartwater
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.smartwater.screens.DashboardScreen
+import com.app.smartwater.screens.LoginScreen
+import com.app.smartwater.screens.RegisterScreen
+import com.app.smartwater.ui.screens.*
 import com.app.smartwater.ui.theme.SmartWaterTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             SmartWaterTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                var currentScreen by remember { mutableStateOf<Screen>(Screen.Login) }
+
+                when (currentScreen) {
+                    is Screen.Login -> LoginScreen(
+                        onLoginSuccess = { currentScreen = Screen.Dashboard },
+                        onRegisterClick = { currentScreen = Screen.Register }
                     )
+                    is Screen.Register -> RegisterScreen(
+                        onRegisterSuccess = { currentScreen = Screen.Login },
+                        onBackToLogin = { currentScreen = Screen.Login }
+                    )
+                    is Screen.Dashboard -> DashboardScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+sealed class Screen {
+    object Login : Screen()
+    object Register : Screen()
+    object Dashboard : Screen()
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun DefaultPreview() {
     SmartWaterTheme {
-        Greeting("Android")
+        LoginScreen(onLoginSuccess = {}, onRegisterClick = {})
     }
 }
