@@ -32,6 +32,11 @@ fun DashboardScreen(authToken: String) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        Text(
+            text = "Smart Water Management System Dashboard",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         WaterLevelSection(waterLevel)
         Spacer(modifier = Modifier.height(16.dp))
         TemperatureSection(temperature)

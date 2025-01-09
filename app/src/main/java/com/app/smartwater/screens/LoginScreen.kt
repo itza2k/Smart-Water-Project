@@ -22,6 +22,11 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onRegisterClick: () -> Unit) {
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
+        Text(
+            text = "Smart Water Management System",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         TextField(
             value = email,
             onValueChange = { email = it },
